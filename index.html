@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compliance in AI | Chase Aldridge | AI Pioneers Club Denver</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --font-body:    "Instrument Sans", system-ui, sans-serif;
+      --font-display: "Cormorant Garamond", Georgia, serif;
+      --font-mono:    "Space Grotesk", monospace;
+
+      --color-bg:           oklch(96% .005 350);
+      --color-paper:        oklch(98% 0 0);
+      --color-mist:         oklch(92% 0 0);
+      --color-ash:          oklch(55% 0 0);
+      --color-charcoal:     oklch(25% 0 0);
+      --color-ink:          oklch(10% 0 0);
+      --color-accent:       oklch(60% .25 350);
+      --color-accent-soft:  oklch(60% .25 350 / .15);
+
+      --space-xs:  8px;
+      --space-sm:  16px;
+      --space-md:  24px;
+      --space-lg:  32px;
+      --space-xl:  48px;
+      --space-2xl: 80px;
+      --space-3xl: 120px;
+
+      --ease-out:    cubic-bezier(.16, 1, .3, 1);
+      --dur-base:    .3s;
+      --dur-slow:    .6s;
+    }
+
+    html, body {
+      background: var(--color-bg);
+      color: var(--color-ink);
+      margin: 0;
+      padding: 0;
+    }
+
+    .reveal-viewport { background: var(--color-bg); }
+
+    .reveal {
+      font-family: var(--font-body);
+      font-size: 26px;
+      line-height: 1.65;
+      color: var(--color-ink);
+      background: var(--color-bg);
+    }
+
+    .reveal .slides { text-align: left; }
+    .reveal .slides section {
+      padding: var(--space-2xl);
+      text-align: left;
+      top: 0 !important;
+    }
+    .reveal .slides section.divider { padding-top: var(--space-3xl); }
+
+    .reveal h1,
+    .reveal h2,
+    .reveal h3 {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      color: var(--color-ink);
+      line-height: 1.15;
+      margin: 0 0 var(--space-lg);
+      text-transform: none;
+    }
+    .reveal h1 {
+      font-size: clamp(56px, 6vw, 88px);
+      font-weight: 300;
+      line-height: 1.05;
+    }
+    .reveal h2 {
+      font-size: clamp(44px, 3.5vw, 52px);
+    }
+    .reveal h3 {
+      font-size: 32px;
+      line-height: 1.2;
+    }
+
+    .reveal h1 em,
+    .reveal h2 em,
+    .reveal h3 em {
+      font-style: italic;
+      color: var(--color-accent);
+    }
+
+    .reveal .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--color-accent);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin: 0 0 var(--space-xs);
+      display: block;
+    }
+
+    .reveal p {
+      font-family: var(--font-body);
+      font-size: 26px;
+      line-height: 1.65;
+      color: var(--color-ink);
+      max-width: 60ch;
+      margin: 0 0 var(--space-md);
+      text-align: left;
+    }
+
+    .reveal p.subhead {
+      font-size: 26px;
+      max-width: 50ch;
+      color: var(--color-ink);
+      margin-bottom: var(--space-xl);
+    }
+
+    .reveal p.closer {
+      margin-top: var(--space-lg);
+      max-width: 60ch;
+    }
+
+    .reveal em {
+      font-style: italic;
+      color: var(--color-ink);
+      font-weight: 500;
+    }
+
+    .reveal a {
+      color: var(--color-ink);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: var(--color-accent);
+    }
+
+    .reveal code {
+      font-family: var(--font-mono);
+      font-size: 0.875em;
+      background: var(--color-mist);
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: var(--color-ink);
+    }
+
+    .reveal hr {
+      border: none;
+      border-top: 1px solid var(--color-mist);
+      margin: var(--space-xl) 0;
+      max-width: 100%;
+    }
+
+    /* Cover slide */
+    .cover .stack {
+      max-width: 60ch;
+    }
+    .cover .byline {
+      margin-top: var(--space-3xl);
+      font-family: var(--font-body);
+      font-size: 16px;
+      color: var(--color-ink);
+      font-weight: 500;
+    }
+
+    /* Slide 18 byline (contact + URL) */
+    .slide-contact {
+      font-family: var(--font-body);
+      font-size: 16px;
+      color: var(--color-charcoal);
+      margin-top: var(--space-lg);
+    }
+    .cover .date {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--color-charcoal);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: var(--space-xs);
+    }
+
+    /* 2-up comparison (slides 2, 3) */
+    .compare-2 {
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr;
+      gap: var(--space-xl);
+      margin-top: var(--space-lg);
+      max-width: 1280px;
+    }
+    .compare-2 .rule {
+      background: var(--color-mist);
+      width: 1px;
+    }
+    .compare-2 .col h3 {
+      font-size: 28px;
+      margin-bottom: var(--space-sm);
+    }
+    .compare-2 .col .tag {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--color-charcoal);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: var(--space-md);
+    }
+    .compare-2 .col p {
+      font-size: 22px;
+      max-width: 32ch;
+      margin: 0 0 var(--space-md);
+    }
+    .compare-2 .col p:last-child { margin-bottom: 0; }
+
+    /* Numbered list (slides 5, 7, 9, 10, 16, 18) */
+    .numlist {
+      list-style: none;
+      padding: 0;
+      margin: var(--space-md) 0;
+      display: grid;
+      gap: var(--space-lg);
+    }
+    .numlist .row {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: var(--space-lg);
+      align-items: baseline;
+    }
+    .numlist .num {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 64px;
+      line-height: 1;
+      color: var(--color-ink);
+      letter-spacing: -0.02em;
+    }
+    .numlist .body { display: block; }
+    .numlist .name {
+      font-family: var(--font-mono);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--color-charcoal);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-right: var(--space-sm);
+    }
+    .numlist .name.lower {
+      text-transform: none;
+      letter-spacing: 0;
+      font-size: 22px;
+      color: var(--color-charcoal);
+    }
+    .numlist .desc {
+      font-family: var(--font-body);
+      font-size: 22px;
+      line-height: 1.55;
+      color: var(--color-ink);
+      max-width: 60ch;
+      display: inline;
+    }
+
+    /* Dense numbered list (slides 9, 16): body 18px, single-line filters */
+    .numlist.dense .row { gap: var(--space-md); }
+    .numlist.dense .desc {
+      font-size: 18px;
+      line-height: 1.55;
+    }
+
+    /* Trust classification (slide 6) */
+    .trust {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: var(--space-lg);
+      margin: var(--space-md) 0;
+      row-gap: var(--space-lg);
+      align-items: baseline;
+      max-width: 1000px;
+    }
+    .trust .label {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--color-charcoal);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+    .trust .desc {
+      font-family: var(--font-body);
+      font-size: 22px;
+      line-height: 1.55;
+      color: var(--color-ink);
+      max-width: 60ch;
+    }
+
+    /* Zone catalog (slide 8) */
+    .zones {
+      display: grid;
+      grid-template-columns: 60px 220px 1fr;
+      gap: var(--space-md) var(--space-lg);
+      margin: var(--space-md) 0;
+      max-width: 1100px;
+    }
+    .zones .z {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--color-charcoal);
+    }
+    .zones .name {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      color: var(--color-ink);
+    }
+    .zones .paths {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      color: var(--color-charcoal);
+    }
+
+    /* Data display (slide 13) */
+    .datablock {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: var(--space-md) var(--space-lg);
+      align-items: baseline;
+      margin: var(--space-md) 0 var(--space-xl);
+      max-width: 900px;
+    }
+    .datablock .val {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 48px;
+      line-height: 1;
+      color: var(--color-ink);
+      letter-spacing: -0.02em;
+    }
+    .datablock .lbl {
+      font-family: var(--font-body);
+      font-size: 22px;
+      color: var(--color-ink);
+    }
+
+    /* Risk × Autonomy grid (slide 17) */
+    .matrix {
+      display: grid;
+      grid-template-columns: 120px repeat(3, 1fr);
+      grid-template-rows: auto repeat(3, 1fr);
+      gap: 1px;
+      background: var(--color-mist);
+      margin: var(--space-md) 0;
+      max-width: 1700px;
+      border: 1px solid var(--color-mist);
+    }
+    .matrix .cell,
+    .matrix .axis-label,
+    .matrix .corner {
+      background: var(--color-bg);
+      padding: var(--space-md);
+    }
+    .matrix .corner { background: var(--color-bg); }
+    .matrix .axis-label {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 22px;
+      color: var(--color-ink);
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .matrix .col-label {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 22px;
+      color: var(--color-ink);
+      padding: var(--space-sm) var(--space-md) var(--space-md);
+      background: var(--color-bg);
+    }
+    .matrix .cell {
+      font-family: var(--font-body);
+      font-size: 18px;
+      line-height: 1.55;
+      color: var(--color-ink);
+    }
+    .matrix .cell.diagonal { background: var(--color-mist); }
+    .matrix .cell strong {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 500;
+      font-size: 22px;
+      color: var(--color-ink);
+      display: block;
+      margin-bottom: var(--space-xs);
+    }
+
+    /* Stanza prose (slide 12) */
+    .stanza p {
+      margin-bottom: var(--space-sm);
+      max-width: 60ch;
+    }
+    .stanza p:last-child { margin-bottom: 0; }
+
+    /* Bridge two-block (slide 11) */
+    .bridge p {
+      max-width: 60ch;
+      margin-bottom: var(--space-md);
+    }
+
+    /* Take-away sections (slide 18) */
+    .takeaway {
+      margin-bottom: var(--space-lg);
+    }
+    .takeaway h3 {
+      font-size: 28px;
+      margin-bottom: var(--space-xs);
+    }
+    .takeaway p { margin-bottom: 0; }
+
+    /* Slide footer */
+    .reveal .slide-number {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-charcoal);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: transparent;
+      right: var(--space-2xl);
+      bottom: var(--space-lg);
+    }
+
+    /* Hero entrance (slides 1, 17 only) */
+    .reveal section.hero h1,
+    .reveal section.hero h2 {
+      animation: heroEnter var(--dur-slow) var(--ease-out) both;
+    }
+    @keyframes heroEnter {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Reveal progress + chrome cleanup */
+    .reveal .progress {
+      color: var(--color-accent);
+      height: 2px;
+    }
+    .reveal .controls { color: var(--color-charcoal); }
+
+    /* Left-alignment is enforced via text-align on .slides section. */
+    /* Reveal's positioning math stays intact. */
+  </style>
+</head>
+<body>
+
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- Slide 1: Cover -->
+      <section class="cover hero">
+        <div class="stack">
+          <span class="eyebrow">AI Pioneers Club &middot; Denver, CO</span>
+          <h1>Compliance in AI.</h1>
+          <p class="subhead">Personal AI is classical mechanics. Enterprise AI is <em>quantum</em> mechanics.</p>
+          <div class="byline">Chase Aldridge</div>
+          <div class="date">May 20, 2026</div>
+        </div>
+        <aside class="notes">
+          Most AI compliance content is policy text. This talk is running code on both sides of a wall. The wall is size.
+        </aside>
+      </section>
+
+      <!-- Slide 2: The thesis -->
+      <section>
+        <span class="eyebrow">The thesis</span>
+        <h2>Personal AI lives in classical mechanics. Enterprise AI lives in <em>quantum</em> mechanics.</h2>
+
+        <hr>
+
+        <div class="compare-2">
+          <div class="col">
+            <div class="tag">Classical &middot; Personal AI</div>
+            <p>You can enumerate every job.</p>
+            <p>You can predict any single call.</p>
+            <p>Guards are deterministic hooks.</p>
+            <p>State is traceable end to end.</p>
+            <p>Failure is one bot, one fix.</p>
+          </div>
+          <div class="rule"></div>
+          <div class="col">
+            <div class="tag">Quantum &middot; Enterprise AI</div>
+            <p>You cannot enumerate every call.</p>
+            <p>You cannot predict any one of them.</p>
+            <p>Guards are sampled review.</p>
+            <p>State is aggregate metrics.</p>
+            <p>Failure is drift across a population.</p>
+          </div>
+        </div>
+
+        <p class="closer">The physics changes. So does the toolkit.</p>
+
+        <aside class="notes">
+          The mistake people make: treating enterprise compliance as personal compliance with bigger budgets. It isn't.
+        </aside>
+      </section>
+
+      <!-- Slide 3: Why I'm qualified -->
+      <section>
+        <span class="eyebrow">Why I'm qualified</span>
+        <h2>Two angles I'm building from this year.</h2>
+
+        <hr>
+
+        <div class="compare-2">
+          <div class="col">
+            <h3>Personal operator</h3>
+            <p>Forty five autonomous jobs running against my email, money, content, two communities. Pre-tool hooks on the riskiest commands, a five-mode dial on every bot, filter chains for the welcome flow. Built and rebuilt over five years.</p>
+          </div>
+          <div class="rule"></div>
+          <div class="col">
+            <h3>Enterprise practitioner</h3>
+            <p>SaaS platform. Real GRC team. UK GDPR and EU AI Act in scope. Biometric data. Identity verification required to post.</p>
+            <p>Anonymized tonight. Patterns are real.</p>
+          </div>
+        </div>
+
+        <aside class="notes">
+          Forty five autonomous jobs on the personal side. Casting and talent SaaS on the enterprise side, anonymized. The patterns at the two ends don't transfer cleanly.
+        </aside>
+      </section>
+
+      <!-- Slide 4: The keys + outbound gate -->
+      <section>
+        <span class="eyebrow">Personal AI &middot; The threat model</span>
+        <h2>Your AI has the keys.</h2>
+
+        <p>It reads your inbox. It can send messages, move money, touch code, edit your second brain, and commit to your repos. Anything you can do from the keyboard, the agent can do at three in the morning while you sleep.</p>
+
+        <p><em>A personal AI without compliance is an intern with admin access and no boss in the room.</em></p>
+
+        <hr>
+
+        <p>Outbound is the highest blast radius. One pre-Bash hook scans every command for nine outbound patterns. Resend, GoHighLevel, Slack API, curl to email APIs, Twilio, WhatsApp, Gmail CLI, SMS. The hook forces the recipient, subject, and full body into the agent's working context. Four internal alert channels are exempt.</p>
+
+        <p class="closer">The hook never blocks. It forces visibility.</p>
+
+        <aside class="notes">
+          The agent runs with my credentials around the clock. Outbound gets the loudest hook because one bad email costs real money. Or relationships, which are worse.
+        </aside>
+      </section>
+
+      <!-- Slide 5: The reasoning loop -->
+      <section>
+        <span class="eyebrow">Personal AI &middot; The reasoning loop</span>
+        <h2>The agent runs a <em>seven-phase</em> loop on any non-trivial task.</h2>
+
+        <p>The loop is auditable. Each phase emits a structured artifact, so when something goes sideways I can trace which phase the agent skipped or got wrong.</p>
+
+        <ul class="numlist">
+          <li class="row"><span class="num">01</span><span class="body"><span class="name">Observe</span><span class="desc">Echo the intent in one sentence. Preflight gates. Reproduce before touching code.</span></span></li>
+          <li class="row"><span class="num">02</span><span class="body"><span class="name">Think</span><span class="desc">Premortem. Surface the riskiest assumptions and check them.</span></span></li>
+          <li class="row"><span class="num">03</span><span class="body"><span class="name">Plan</span><span class="desc">Scope, deliverables, parallel work, feature breakdown.</span></span></li>
+          <li class="row"><span class="num">04</span><span class="body"><span class="name">Build</span><span class="desc">Invoke the capabilities the plan called out. Root cause at ingestion.</span></span></li>
+          <li class="row"><span class="num">05</span><span class="body"><span class="name">Execute</span><span class="desc">Per-criterion inline verification. Tool probes at every transition.</span></span></li>
+          <li class="row"><span class="num">06</span><span class="body"><span class="name">Verify</span><span class="desc">Live probe of user-facing artifacts. Re-read the original request.</span></span></li>
+          <li class="row"><span class="num">07</span><span class="body"><span class="name">Learn</span><span class="desc">Conjecture, refutation, changelog entry. Doc sync.</span></span></li>
+        </ul>
+
+        <p class="closer">This is the difference between an agent that improvises and one running a process you can audit.</p>
+
+        <aside class="notes">
+          I call this the JAX Algorithm v6.3.0. Don't get hung up on the name; the point is the audit trail.
+        </aside>
+      </section>
+
+      <!-- Slide 6: Action trust -->
+      <section>
+        <span class="eyebrow">Personal AI &middot; Action trust</span>
+        <h2><em>Twenty-six</em> command patterns sorted into three trust levels.</h2>
+
+        <p>Every shell command passes through a pre-tool-use hook that classifies it before the agent runs it. The hook never blocks; it injects context the agent has to read.</p>
+
+        <hr>
+
+        <div class="trust">
+          <div class="label">Low</div>
+          <div class="desc">Read-only, local, harmless. Silent passthrough.</div>
+
+          <div class="label">Medium</div>
+          <div class="desc">Reversible state changes. Allow with a warning. (<code>curl</code>, <code>git commit</code>, <code>bun install</code>.)</div>
+
+          <div class="label">High</div>
+          <div class="desc">Hard to reverse, or shared production state. Strong confirmation context injected. (<code>git push</code>, <code>rm -rf</code>, <code>sudo</code>, SQL DROP.)</div>
+        </div>
+
+        <hr>
+
+        <p>Example. The agent tries <code>git push origin main --force</code>. Classifier returns HIGH. The hook injects: "this rewrites remote history. Check branch protection." The agent now has to argue around that context to proceed. It rarely does.</p>
+
+        <aside class="notes">
+          The local-network exemption matters: curls to localhost get downgraded so dev loops don't become a warning storm.
+        </aside>
+      </section>
+
+      <!-- Slide 7: Mode progression -->
+      <section>
+        <span class="eyebrow">Personal AI &middot; Mode progression</span>
+        <h2>Every bot ships with a <em>five-mode</em> dial. No bot starts at the top.</h2>
+
+        <ul class="numlist">
+          <li class="row"><span class="num">01</span><span class="body"><span class="name lower">off</span><span class="desc">Killed. The cron fires, the script exits before doing work.</span></span></li>
+          <li class="row"><span class="num">02</span><span class="body"><span class="name lower">dry</span><span class="desc">Drafts run, nothing posts. Logs only.</span></span></li>
+          <li class="row"><span class="num">03</span><span class="body"><span class="name lower">review</span><span class="desc">Drafts post to Slack for me to approve one at a time.</span></span></li>
+          <li class="row"><span class="num">04</span><span class="body"><span class="name lower">test</span><span class="desc">Posts to a sandbox community with no real members.</span></span></li>
+          <li class="row"><span class="num">05</span><span class="body"><span class="name lower">live</span><span class="desc">Production. The bot earned its way up.</span></span></li>
+        </ul>
+
+        <hr>
+
+        <p>One environment variable controls the entire ladder. If a bot misbehaves at 3 a.m., one Cronicle setting change kills it: no code change, no deploy, no vendor login required.</p>
+
+        <p class="closer">Even live ships with a paranoia cap. One post per run for the first twenty four hours.</p>
+
+        <aside class="notes">
+          The dial came from a real incident: a bot that passed test broke live in front of a real community in a subtle way. Every bot walks the ladder now.
+        </aside>
+      </section>
+
+      <!-- Slide 8: ContainmentGuard -->
+      <section>
+        <span class="eyebrow">Personal AI &middot; The one that blocks</span>
+        <h2>ContainmentGuard. The hook that denies the write.</h2>
+
+        <p>Pre-tool-use hook on Edit, Write, and MultiEdit. It scans content before it lands on disk. If the content matches an identity string or a credential prefix, the hook exits with code 2 and the write does not happen.</p>
+
+        <p>Six zones define what stays private:</p>
+
+        <div class="zones">
+          <span class="z">Z1</span><span class="name">user-data</span><span class="paths">PAI/USER paths</span>
+          <span class="z">Z2</span><span class="name">config-secrets</span><span class="paths">.env, settings.json, .mcp.json</span>
+          <span class="z">Z3</span><span class="name">runtime-memory</span><span class="paths">brain, memory, projects</span>
+          <span class="z">Z4</span><span class="name">private-skills</span><span class="paths">underscore-prefixed</span>
+          <span class="z">Z5</span><span class="name">install-state</span><span class="paths">sessions, history</span>
+          <span class="z">Z6</span><span class="name">private-infra</span><span class="paths">scratchpad, personas, logs</span>
+        </div>
+
+        <hr>
+
+        <p>Eight identity patterns and six credential prefix patterns: <code>sk-ant</code> for Anthropic, <code>eyJ</code> for Supabase service-role keys, <code>re_</code> for Resend, plus three more. The prefixes are easy to scan.</p>
+
+        <p class="closer">A policy that says "do not paste secrets" gets ignored on a tired Tuesday. A hook that physically cannot write the secret is on duty forever.</p>
+
+        <aside class="notes">
+          Ship the hook in log-only mode for 24 hours first. Watch what it would have blocked. Tune the patterns against real traffic. Then flip enforcement on.
+        </aside>
+      </section>
+
+      <!-- Slide 9: Filter chain + review gate -->
+      <section>
+        <span class="eyebrow">Personal AI &middot; The filter chain plus the review gate</span>
+        <h2>Welcome-bot decisions encoded as <em>seven</em> independent filters.</h2>
+
+        <ul class="numlist dense">
+          <li class="row"><span class="num">01</span><span class="body"><span class="name">Max age</span><span class="desc">48 hours. Don't reply to two-week-old zombie threads.</span></span></li>
+          <li class="row"><span class="num">02</span><span class="body"><span class="name">Min age</span><span class="desc">5 minutes. Don't be the first comment in seconds.</span></span></li>
+          <li class="row"><span class="num">03</span><span class="body"><span class="name">Max per run</span><span class="desc">3 intros. Stop sudden floods.</span></span></li>
+          <li class="row"><span class="num">04</span><span class="body"><span class="name">Skip if</span><span class="desc">20+ comments. The party already started.</span></span></li>
+          <li class="row"><span class="num">05</span><span class="body"><span class="name">Min body</span><span class="desc">20 characters. Skips the wave-emoji "hi" posts.</span></span></li>
+          <li class="row"><span class="num">06</span><span class="body"><span class="name">Classifier</span><span class="desc">On or off per community based on volume.</span></span></li>
+          <li class="row"><span class="num">07</span><span class="body"><span class="name">Coin flip</span><span class="desc">85% post rate. A bot that comments on everything looks mechanical.</span></span></li>
+        </ul>
+
+        <p>Each filter is testable in isolation, toggles per community, and writes its decision to Supabase with the chain version that processed it.</p>
+
+        <hr>
+
+        <p>The filters catch mechanical mistakes, not fabrications.</p>
+
+        <p>The welcome bot once drafted a comment that said <em>just starting to layer in Claude Code</em>. False. I use Claude Code every day. The bot was extrapolating from the member's intro and mirroring their journey back as mine. Review mode caught it. Live mode would have shipped it.</p>
+
+        <p class="closer">The Slack review gate is the second layer. Drafts post there before they post anywhere.</p>
+
+        <aside class="notes">
+          The fabrication caught in review mode is the canonical incident: rules layer one filters mechanical stuff, the Slack gate catches the bot inventing biographical claims.
+        </aside>
+      </section>
+
+      <!-- Slide 10: Memory as audit trail -->
+      <section>
+        <span class="eyebrow">Personal AI &middot; The receipts</span>
+        <h2>You cannot govern what you cannot <em>query</em> later.</h2>
+
+        <ul class="numlist">
+          <li class="row"><span class="num">01</span><span class="body"><span class="name">Capture</span><span class="desc">Hooks emit on every tool use, agent spawn, error, and cost event.</span></span></li>
+          <li class="row"><span class="num">02</span><span class="body"><span class="name">Persist</span><span class="desc">SQLite + FTS5 + nomic embeddings. The sub-agent stop hook extracts findings from transcripts.</span></span></li>
+          <li class="row"><span class="num">03</span><span class="body"><span class="name">Decay</span><span class="desc">Episodic memories fade 2% per day. Semantic 0.5%. Below salience 0.1, prune.</span></span></li>
+          <li class="row"><span class="num">04</span><span class="body"><span class="name">Query</span><span class="desc">Searchable, citable. "What did the bot decide on May 10?"</span></span></li>
+        </ul>
+
+        <hr>
+
+        <p>One subtle thing worth holding. Rejections must distinguish transient from permanent. If a time-based filter says "this post is too young to comment on," that is transient. Mark it not-yet. Do not mark it seen. Otherwise the post becomes invisible forever when it matures.</p>
+
+        <p class="closer">Same engineering discipline as an enterprise audit log, running on a SQLite file instead of a Splunk index.</p>
+
+        <aside class="notes">
+          Memory is the bridge between Part 1 and Part 2. Same engineering as an enterprise audit log at a fraction of the cost.
+        </aside>
+      </section>
+
+      <!-- Slide 11: The bridge -->
+      <section class="divider bridge">
+        <span class="eyebrow">The bridge</span>
+        <h2>The principle that holds on both sides.</h2>
+
+        <p>Reduce AI as much as possible. Default to deterministic code.</p>
+
+        <p>Every regex you write is one prompt you do not. Every SQL is one drift surface you avoid. The LLM is for the ambiguity, not for the math, the comparisons, or the field extraction.</p>
+
+        <hr>
+
+        <p>This rule scales differently at each end.</p>
+
+        <p>At a hundred calls a day, deterministic-first is a preference. You could get away with prompting everything. You would just be spending more.</p>
+
+        <p>At a hundred thousand calls a day, deterministic-first is a requirement. You cannot read the log. You cannot predict any single call. The only surface area you can govern with certainty is the part that does not run through the model.</p>
+
+        <p class="closer">The principle holds at both ends; the consequence of breaking it doesn't.</p>
+
+        <aside class="notes">
+          Deterministic first because deterministic code is the only thing auditable in the strong sense. LLM calls are probabilistic; auditing them is the whole rest of the talk.
+        </aside>
+      </section>
+
+      <!-- Slide 12: You cannot predict a single call -->
+      <section class="divider stanza">
+        <span class="eyebrow">Part 2 &middot; Enterprise AI</span>
+        <h2>You cannot predict any <em>single</em> call.</h2>
+
+        <p>At a hundred thousand calls a day, every governance instinct from Part 1 stops working. You cannot enumerate them, trace them, or put a hook on every call and read what it did.</p>
+
+        <p>The substitute is statistical. Measure the distribution of outcomes instead of the events. Watch for drift in the prompt-and-model pair instead of waiting for crashes. Sample a small random subset every day and have a human read what the model decided.</p>
+
+        <hr>
+
+        <p class="closer">The next five slides are how that machinery looks at enterprise scale.</p>
+
+        <aside class="notes">
+          The three shifts: distributions instead of events, drift instead of crashes, blind sampling instead of comprehensive audit.
+        </aside>
+      </section>
+
+      <!-- Slide 13: The Prompt Lab -->
+      <section>
+        <span class="eyebrow">Enterprise &middot; The lab</span>
+        <h2>The Prompt Lab: a calibration set that <em>non-engineers</em> own.</h2>
+
+        <h3>Methodology</h3>
+        <p>Subject matter experts review cases blind. The interface emulates the live workflow at submit time, so their call lands first. The AI's analysis and decision get revealed second, with the SME's commentary captured against it. Zero anchoring bias by construction.</p>
+
+        <h3>The numbers, as of this week</h3>
+        <div class="datablock">
+          <span class="val">528</span><span class="lbl">SME-reviewed cases in the golden set.</span>
+          <span class="val">26</span><span class="lbl">eval runs to date.</span>
+          <span class="val">v4</span><span class="lbl">prompt in production.</span>
+          <span class="val">74.7%</span><span class="lbl">agreement on the latest 186-sample subset.</span>
+        </div>
+
+        <hr>
+
+        <p class="closer">The lab has three tabs: authoring, versioning, head-to-head model comparison. Domain experts ship prompt patches without opening a pull request.</p>
+
+        <aside class="notes">
+          Engineers stop being the bottleneck for prompt iteration. SMEs ship the patches.
+        </aside>
+      </section>
+
+      <!-- Slide 14: Drift -->
+      <section>
+        <span class="eyebrow">Enterprise &middot; Drift</span>
+        <h2>Drift detection is <em>replaying</em> the golden set.</h2>
+
+        <p>Same golden set, same prompt, run on a schedule. Compare to the last run.</p>
+
+        <p>On 2026-04-15 the v4 prompt against sonnet-4-6 hit 76.2% agreement. On 2026-04-29 the same pair hit 71.4%. Down 4.8 points in two weeks. The vendor never told us. The replay did.</p>
+
+        <hr>
+
+        <p>Why replays beat vendor status pages:</p>
+
+        <p>Vendors don't announce small regressions or A/B holdouts.</p>
+
+        <p>Your prompt-model pair is what regressed, not the model alone.</p>
+
+        <p>Per-sample deltas tell you which decisions flipped, not just that the aggregate moved.</p>
+
+        <p>The replay infrastructure doubles as your vendor-swap toolkit.</p>
+
+        <p class="closer">This is the difference between knowing your AI works today and knowing it still works next month.</p>
+
+        <aside class="notes">
+          The replay infrastructure also pays its keep as a vendor swap toolkit. The day you want to move from one provider to another you run candidates against the golden set and the decision is data-driven.
+        </aside>
+      </section>
+
+      <!-- Slide 15: Blind sampling -->
+      <section>
+        <span class="eyebrow">Enterprise &middot; Sampled review</span>
+        <h2>Blind human sampling, <em>continuously</em>.</h2>
+
+        <p>Every day, a small random sample of yesterday's decisions gets queued for a human reviewer. Same blind UI as the SME calibration tool. The reviewer scores first. The AI's decision is revealed second. Disagreements feed the prompt patch queue.</p>
+
+        <hr>
+
+        <p>Why dashboards alone fail:</p>
+
+        <p>Aggregate accuracy stays flat while a single category quietly collapses. You can lose ten points on a low-volume category and never see it in the headline number.</p>
+
+        <p>Confidence scores are vibes until a human disagrees. The model says 90% confident. The human says wrong. That disagreement is what calibrates the number; without it, 90% is just a number.</p>
+
+        <p>Tone, format, and framing drift never show up in metrics. They only show up in reads. The AI hedges too much, loses structure, or stops sounding like the brand. A reader catches that on day one.</p>
+
+        <p class="closer">The same blind UI runs SME calibration <em>and</em> daily blind review. The infrastructure compounds.</p>
+
+        <aside class="notes">
+          Five to ten samples a day takes a reviewer the time of a short coffee break. The catch rate is high because the dimensions they're judging are exactly the ones dashboards miss.
+        </aside>
+      </section>
+
+      <!-- Slide 16: Set and forget -->
+      <section>
+        <span class="eyebrow">Enterprise &middot; Failure mode</span>
+        <h2>Set and forget is the failure mode.</h2>
+
+        <p>Five real incidents from the last quarter, anonymized. Alerts caught none of them. Humans staying in the loop caught all of them.</p>
+
+        <ul class="numlist dense">
+          <li class="row"><span class="num">01</span><span class="body"><span class="name">Tone drift</span><span class="desc">The email composer prompt drifted across three macro styles over a month. Aggregate accuracy stayed fine. The reads sounded wrong.</span></span></li>
+          <li class="row"><span class="num">02</span><span class="body"><span class="name">Logging gap</span><span class="desc">Co-pilot mode shipped without writing decision rows. 174 calls in. Zero log entries. Nobody noticed for ten days.</span></span></li>
+          <li class="row"><span class="num">03</span><span class="body"><span class="name">Vendor field bug</span><span class="desc">Identity vendor changed payload schema. The auto-invite pulled the wrong email field. Real users got nothing for two days.</span></span></li>
+          <li class="row"><span class="num">04</span><span class="body"><span class="name">Baseline drift</span><span class="desc">The manual review pipeline carried its own drift between SMEs and over time. The golden set carried that drift forward.</span></span></li>
+          <li class="row"><span class="num">05</span><span class="body"><span class="name">Gate blocking the gate</span><span class="desc">The criteria list that unlocks the next autonomy tier has been pending for weeks. The approval process itself became the blocker.</span></span></li>
+        </ul>
+
+        <p class="closer">The system always tells you it's working. Only the reads tell you whether it is.</p>
+
+        <aside class="notes">
+          Failure 5 is the meta one: even the approval pipeline can become its own bottleneck. Humans have to move too.
+        </aside>
+      </section>
+
+      <!-- Slide 17: Risk × Autonomy (hero) -->
+      <section class="hero">
+        <span class="eyebrow">Enterprise &middot; Hero</span>
+        <h2>Risk &times; <em>Autonomy</em>.</h2>
+
+        <p>The cell determines what you have to document, how often you sample, and the cadence of governance required to ship a feature.</p>
+
+        <div class="matrix">
+          <div class="corner"></div>
+          <div class="col-label">Human-controlled</div>
+          <div class="col-label">Co-pilot</div>
+          <div class="col-label">Autonomous</div>
+
+          <div class="axis-label">Low risk</div>
+          <div class="cell">Light docs. Spot-check sample. No formal cadence.</div>
+          <div class="cell">Standard process docs. Monthly sample review. Versioned prompts.</div>
+          <div class="cell">Per-decision logging. Weekly sample. Drift dashboard. Rollback ready.</div>
+
+          <div class="axis-label">Medium risk</div>
+          <div class="cell">Standard docs. Weekly sample. Decision rationale captured.</div>
+          <div class="cell diagonal">Full logging. Blind sampled review daily. Drift detection on schedule.</div>
+          <div class="cell">Continuous drift monitor. Kill switch. Daily blind review. Calibration replays.</div>
+
+          <div class="axis-label">High risk</div>
+          <div class="cell diagonal">Formal approval flow. Per-decision audit. Independent review required.</div>
+          <div class="cell">Per-decision audit. Continuous review queue. Two-person rule on overrides.</div>
+          <div class="cell diagonal"><strong>STOP.</strong>Move down a row or a column before turning this on.</div>
+        </div>
+
+        <p class="closer">Place every feature on the grid before you ship it. Move down or left, never up or right, without re-earning trust.</p>
+
+        <aside class="notes">
+          The Risk x Autonomy grid does at the feature level what Mode Progression does at the bot level.
+        </aside>
+      </section>
+
+      <!-- Slide 18: Build path -->
+      <section>
+        <span class="eyebrow">Enterprise &middot; The build path</span>
+        <h2>Replicate the human workflow first. Then walk one <em>column</em> at a time.</h2>
+
+        <ul class="numlist">
+          <li class="row"><span class="num">01</span><span class="body"><span class="name">Training</span><span class="desc">Humans do the work. AI watches. Calibration set built.</span></span></li>
+          <li class="row"><span class="num">02</span><span class="body"><span class="name">Co-pilot</span><span class="desc">AI proposes. Human accepts or overrides. Decision rows captured.</span></span></li>
+          <li class="row"><span class="num">03</span><span class="body"><span class="name">Hybrid</span><span class="desc">AI auto-decides high-confidence. Human handles the low-confidence queue.</span></span></li>
+          <li class="row"><span class="num">04</span><span class="body"><span class="name">Autonomous</span><span class="desc">AI decides. Sampled blind review continues.</span></span></li>
+        </ul>
+
+        <p class="closer">Every step has to earn the next.</p>
+
+        <aside class="notes">
+          Replicate the human workflow first. Then walk one column at a time, earning each tier with the calibration data you collected at the last one.
+        </aside>
+      </section>
+
+      <!-- Slide 19: Take-aways + close -->
+      <section>
+        <span class="eyebrow">The close</span>
+        <h2>What survives the talk.</h2>
+
+        <div class="takeaway">
+          <h3>From Part 1, the personal side</h3>
+          <p>A hook is more enforceable than a memo. Every bot earns its way to live. Audit, or you don't have governance.</p>
+        </div>
+
+        <div class="takeaway">
+          <h3>From Part 2, the enterprise side</h3>
+          <p>The golden set is the artifact. The Prompt Lab is where SMEs own iteration. Blind sampling, drift replays, and the Risk x Autonomy grid are the rest of the toolkit.</p>
+        </div>
+
+        <div class="takeaway">
+          <h3>From the bridge</h3>
+          <p>Deterministic code is the default. The LLM is for the ambiguity.</p>
+        </div>
+
+        <hr>
+
+        <p class="closer">Two physics, one discipline.</p>
+
+        <p class="slide-contact">Chase Aldridge &middot; chasealdridge.com &middot; linkedin.com/in/chase-aldridge</p>
+
+        <aside class="notes">
+          Likely first question is cost: personal stack runs in the low hundreds per month, mostly Claude Code. Likely second is where to start: pick one feature, place it on the grid, build the gates for that cell, then the next.
+        </aside>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: 'c/t',
+      transition: 'fade',
+      transitionSpeed: 'default',
+      backgroundTransition: 'none',
+      width: 1920,
+      height: 1080,
+      margin: 0.04,
+      minScale: 0.2,
+      maxScale: 2.0,
+      center: false,
+      controls: true,
+      progress: true,
+      plugins: [RevealNotes]
+    });
+  </script>
+</body>
+</html>
