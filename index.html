@@ -24,7 +24,7 @@
       --color-charcoal:     oklch(25% 0 0);
       --color-ink:          oklch(10% 0 0);
       --color-accent:       oklch(60% .25 350);
-      --color-accent-soft:  oklch(60% .25 350 / .15);
+      --color-accent-soft:  oklch(60% .25 350 / .18);
 
       --space-xs:  8px;
       --space-sm:  16px;
@@ -438,14 +438,177 @@
       bottom: var(--space-lg);
     }
 
-    /* Hero entrance (slides 1, 17 only) */
+    /* Hero entrance (slides 1, 12, 17 only) */
     .reveal section.hero h1,
-    .reveal section.hero h2 {
+    .reveal section.hero h2,
+    .reveal section.hero .giant-accent {
       animation: heroEnter var(--dur-slow) var(--ease-out) both;
     }
     @keyframes heroEnter {
       from { opacity: 0; transform: translateY(8px); }
       to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Hero scale typography (cover + Part 2 entry + Risk x Autonomy) */
+    .reveal section.hero-scale h1 {
+      font-size: clamp(96px, 9vw, 160px);
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+    .reveal section.hero-scale h2 {
+      font-size: clamp(72px, 7vw, 120px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+
+    /* Single giant accent word (slide 12) */
+    .giant-accent {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(140px, 14vw, 240px);
+      color: var(--color-accent);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      margin: var(--space-md) 0 var(--space-lg);
+      display: block;
+    }
+
+    /* ContainmentGuard zone stack (slide 8) */
+    .zone-stack {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: var(--space-2xl);
+      margin: var(--space-md) 0;
+      max-width: 1500px;
+      align-items: start;
+    }
+    .zone-stack .stack {
+      border-left: 4px solid var(--color-ink);
+      padding-left: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .zone-stack .zone {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      color: var(--color-ink);
+      line-height: 1.3;
+    }
+    .zone-stack .zone .code {
+      font-weight: 700;
+      color: var(--color-charcoal);
+      margin-right: var(--space-sm);
+    }
+    .zone-stack .zone .paths {
+      display: block;
+      color: var(--color-charcoal);
+      font-size: 15px;
+      margin-top: 4px;
+      font-weight: 400;
+    }
+    .zone-stack .commentary p {
+      font-size: 22px;
+      line-height: 1.6;
+      color: var(--color-ink);
+      max-width: 36ch;
+      margin: 0 0 var(--space-md);
+    }
+    .zone-stack .commentary .punch {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 32px;
+      line-height: 1.25;
+      color: var(--color-ink);
+      letter-spacing: -0.01em;
+      max-width: 30ch;
+    }
+
+    /* Fabrication hero slide */
+    .fabrication-hero .quoted {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(64px, 7vw, 112px);
+      line-height: 1.05;
+      color: var(--color-ink);
+      letter-spacing: -0.02em;
+      margin: var(--space-md) 0 var(--space-sm);
+      max-width: 22ch;
+    }
+    .fabrication-hero .quoted::before { content: open-quote; color: var(--color-accent); }
+    .fabrication-hero .quoted::after  { content: close-quote; color: var(--color-accent); }
+    .fabrication-hero .caption {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--color-charcoal);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin: 0 0 var(--space-2xl);
+    }
+
+    /* Drift data display (slide 15) */
+    .drift-data {
+      display: grid;
+      grid-template-columns: 1fr 80px 1fr 1fr;
+      gap: var(--space-lg);
+      align-items: end;
+      max-width: 1300px;
+      margin: var(--space-lg) 0 var(--space-xl);
+    }
+    .drift-data .stat .date {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--color-charcoal);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: var(--space-xs);
+    }
+    .drift-data .stat .pct {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(72px, 7vw, 112px);
+      line-height: 1;
+      color: var(--color-ink);
+      letter-spacing: -0.02em;
+      display: block;
+    }
+    .drift-data .arrow {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 72px;
+      color: var(--color-accent);
+      align-self: end;
+      padding-bottom: 8px;
+    }
+    .drift-data .delta {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 22px;
+      color: var(--color-ink);
+      align-self: end;
+      padding-bottom: 16px;
+    }
+    .drift-data .delta strong {
+      font-family: var(--font-display);
+      font-style: italic;
+      color: var(--color-accent);
+      font-size: 32px;
+      font-weight: 400;
+    }
+
+    /* Matrix STOP cell — color weight progression */
+    .matrix .cell.stop {
+      background: var(--color-accent-soft);
+    }
+    .matrix .cell.stop strong {
+      font-size: 32px;
+      color: var(--color-accent);
+      letter-spacing: -0.01em;
     }
 
     /* Reveal progress + chrome cleanup */
@@ -465,7 +628,7 @@
     <div class="slides">
 
       <!-- Slide 1: Cover -->
-      <section class="cover hero">
+      <section class="cover hero hero-scale">
         <div class="stack">
           <span class="eyebrow">AI Pioneers Club &middot; Denver, CO</span>
           <h1>Compliance in AI.</h1>
@@ -481,7 +644,7 @@
       <!-- Slide 2: The thesis -->
       <section>
         <span class="eyebrow">The thesis</span>
-        <h2>Personal AI lives in classical mechanics. Enterprise AI lives in <em>quantum</em> mechanics.</h2>
+        <h2>Personal AI lives in classical mechanics. Enterprise AI lives in quantum mechanics.</h2>
 
         <hr>
 
@@ -504,8 +667,6 @@
             <p>Failure is drift across a population.</p>
           </div>
         </div>
-
-        <p class="closer">The physics changes. So does the toolkit.</p>
 
         <aside class="notes">
           The mistake people make: treating enterprise compliance as personal compliance with bigger budgets. It isn't.
@@ -548,9 +709,7 @@
 
         <hr>
 
-        <p>Outbound is the highest blast radius. One pre-Bash hook scans every command for nine outbound patterns. Resend, GoHighLevel, Slack API, curl to email APIs, Twilio, WhatsApp, Gmail CLI, SMS. The hook forces the recipient, subject, and full body into the agent's working context. Four internal alert channels are exempt.</p>
-
-        <p class="closer">The hook never blocks. It forces visibility.</p>
+        <p>Outbound is the highest blast radius. One pre-Bash hook scans every command for nine outbound patterns. Resend, GoHighLevel, Slack API, curl to email APIs, Twilio, WhatsApp, Gmail CLI, SMS. The hook forces the recipient, subject, and full body into the agent's working context. It never blocks. Four internal alert channels are exempt.</p>
 
         <aside class="notes">
           The agent runs with my credentials around the clock. Outbound gets the loudest hook because one bad email costs real money. Or relationships, which are worse.
@@ -574,17 +733,15 @@
           <li class="row"><span class="num">07</span><span class="body"><span class="name">Learn</span><span class="desc">Conjecture, refutation, changelog entry. Doc sync.</span></span></li>
         </ul>
 
-        <p class="closer">This is the difference between an agent that improvises and one running a process you can audit.</p>
-
         <aside class="notes">
-          I call this the JAX Algorithm v6.3.0. Don't get hung up on the name; the point is the audit trail.
+          I call this the JAX Algorithm v6.3.0. Don't get hung up on the name; the point is the audit trail. The loop is what makes the agent auditable rather than just clever.
         </aside>
       </section>
 
       <!-- Slide 6: Action trust -->
       <section>
         <span class="eyebrow">Personal AI &middot; Action trust</span>
-        <h2><em>Twenty-six</em> command patterns sorted into three trust levels.</h2>
+        <h2>Twenty-six command patterns sorted into three trust levels.</h2>
 
         <p>Every shell command passes through a pre-tool-use hook that classifies it before the agent runs it. The hook never blocks; it injects context the agent has to read.</p>
 
@@ -613,7 +770,7 @@
       <!-- Slide 7: Mode progression -->
       <section>
         <span class="eyebrow">Personal AI &middot; Mode progression</span>
-        <h2>Every bot ships with a <em>five-mode</em> dial. No bot starts at the top.</h2>
+        <h2>Every bot ships with a five-mode dial. No bot starts at the top.</h2>
 
         <ul class="numlist">
           <li class="row"><span class="num">01</span><span class="body"><span class="name lower">off</span><span class="desc">Killed. The cron fires, the script exits before doing work.</span></span></li>
@@ -639,34 +796,31 @@
         <span class="eyebrow">Personal AI &middot; The one that blocks</span>
         <h2>ContainmentGuard. The hook that denies the write.</h2>
 
-        <p>Pre-tool-use hook on Edit, Write, and MultiEdit. It scans content before it lands on disk. If the content matches an identity string or a credential prefix, the hook exits with code 2 and the write does not happen.</p>
-
-        <p>Six zones define what stays private:</p>
-
-        <div class="zones">
-          <span class="z">Z1</span><span class="name">user-data</span><span class="paths">PAI/USER paths</span>
-          <span class="z">Z2</span><span class="name">config-secrets</span><span class="paths">.env, settings.json, .mcp.json</span>
-          <span class="z">Z3</span><span class="name">runtime-memory</span><span class="paths">brain, memory, projects</span>
-          <span class="z">Z4</span><span class="name">private-skills</span><span class="paths">underscore-prefixed</span>
-          <span class="z">Z5</span><span class="name">install-state</span><span class="paths">sessions, history</span>
-          <span class="z">Z6</span><span class="name">private-infra</span><span class="paths">scratchpad, personas, logs</span>
+        <div class="zone-stack">
+          <div class="stack">
+            <div class="zone"><span class="code">Z1</span>user-data<span class="paths">PAI/USER paths</span></div>
+            <div class="zone"><span class="code">Z2</span>config-secrets<span class="paths">.env, settings.json, .mcp.json</span></div>
+            <div class="zone"><span class="code">Z3</span>runtime-memory<span class="paths">brain, memory, projects</span></div>
+            <div class="zone"><span class="code">Z4</span>private-skills<span class="paths">underscore-prefixed</span></div>
+            <div class="zone"><span class="code">Z5</span>install-state<span class="paths">sessions, history</span></div>
+            <div class="zone"><span class="code">Z6</span>private-infra<span class="paths">scratchpad, personas, logs</span></div>
+          </div>
+          <div class="commentary">
+            <p>Pre-tool-use hook on Edit, Write, and MultiEdit. It scans content before it lands on disk. If the content matches an identity string or a credential prefix, the hook exits with code 2 and the write does not happen.</p>
+            <p>Eight identity patterns and six credential prefixes: <code>sk-ant</code> for Anthropic, <code>eyJ</code> for Supabase service-role keys, <code>re_</code> for Resend, plus three more.</p>
+            <p class="punch">A policy that says "do not paste secrets" gets ignored on a tired Tuesday. A hook that physically cannot write the secret is on duty forever.</p>
+          </div>
         </div>
-
-        <hr>
-
-        <p>Eight identity patterns and six credential prefix patterns: <code>sk-ant</code> for Anthropic, <code>eyJ</code> for Supabase service-role keys, <code>re_</code> for Resend, plus three more. The prefixes are easy to scan.</p>
-
-        <p class="closer">A policy that says "do not paste secrets" gets ignored on a tired Tuesday. A hook that physically cannot write the secret is on duty forever.</p>
 
         <aside class="notes">
           Ship the hook in log-only mode for 24 hours first. Watch what it would have blocked. Tune the patterns against real traffic. Then flip enforcement on.
         </aside>
       </section>
 
-      <!-- Slide 9: Filter chain + review gate -->
+      <!-- Slide 9: Filter chain -->
       <section>
-        <span class="eyebrow">Personal AI &middot; The filter chain plus the review gate</span>
-        <h2>Welcome-bot decisions encoded as <em>seven</em> independent filters.</h2>
+        <span class="eyebrow">Personal AI &middot; Filter chain</span>
+        <h2>Welcome-bot decisions encoded as seven independent filters.</h2>
 
         <ul class="numlist dense">
           <li class="row"><span class="num">01</span><span class="body"><span class="name">Max age</span><span class="desc">48 hours. Don't reply to two-week-old zombie threads.</span></span></li>
@@ -680,16 +834,24 @@
 
         <p>Each filter is testable in isolation, toggles per community, and writes its decision to Supabase with the chain version that processed it.</p>
 
-        <hr>
+        <aside class="notes">
+          Seven filters in code. The chain is versioned, decisions land in Supabase, every filter is independently togglable per community.
+        </aside>
+      </section>
 
-        <p>The filters catch mechanical mistakes, not fabrications.</p>
+      <!-- Slide 10 (NEW): The fabrication -->
+      <section class="fabrication-hero">
+        <span class="eyebrow">Personal AI &middot; What the filters miss</span>
 
-        <p>The welcome bot once drafted a comment that said <em>just starting to layer in Claude Code</em>. False. I use Claude Code every day. The bot was extrapolating from the member's intro and mirroring their journey back as mine. Review mode caught it. Live mode would have shipped it.</p>
+        <p class="quoted">Just starting to layer in Claude Code.</p>
+        <p class="caption">False biographical claim, drafted by the welcome bot, caught in review mode</p>
 
-        <p class="closer">The Slack review gate is the second layer. Drafts post there before they post anywhere.</p>
+        <p>I use Claude Code every day. The bot extrapolated from the member's intro and mirrored their journey back as mine.</p>
+
+        <p>Filters catch mechanical mistakes. The Slack review gate catches fabrications. Drafts post to me before they post anywhere.</p>
 
         <aside class="notes">
-          The fabrication caught in review mode is the canonical incident: rules layer one filters mechanical stuff, the Slack gate catches the bot inventing biographical claims.
+          The canonical incident. Review mode caught it. Live mode would have shipped it. This is why a manual approval gate is the second layer, not optional.
         </aside>
       </section>
 
@@ -709,10 +871,8 @@
 
         <p>One subtle thing worth holding. Rejections must distinguish transient from permanent. If a time-based filter says "this post is too young to comment on," that is transient. Mark it not-yet. Do not mark it seen. Otherwise the post becomes invisible forever when it matures.</p>
 
-        <p class="closer">Same engineering discipline as an enterprise audit log, running on a SQLite file instead of a Splunk index.</p>
-
         <aside class="notes">
-          Memory is the bridge between Part 1 and Part 2. Same engineering as an enterprise audit log at a fraction of the cost.
+          Same engineering as an enterprise audit log at a fraction of the cost. The bridge to Part 2 is here: from local SQLite to vendor-scale audit infrastructure.
         </aside>
       </section>
 
@@ -740,21 +900,18 @@
         </aside>
       </section>
 
-      <!-- Slide 12: You cannot predict a single call -->
-      <section class="divider stanza">
+      <!-- Slide 12: Part 2 entry (hero scale, giant accent) -->
+      <section class="divider stanza hero hero-scale">
         <span class="eyebrow">Part 2 &middot; Enterprise AI</span>
-        <h2>You cannot predict any <em>single</em> call.</h2>
 
-        <p>At a hundred thousand calls a day, every governance instinct from Part 1 stops working. You cannot enumerate them, trace them, or put a hook on every call and read what it did.</p>
+        <span class="giant-accent">Quantum.</span>
+
+        <p>At a hundred thousand calls a day, every governance instinct from Part 1 stops working. You cannot enumerate, trace, or put a hook on every call and read what it did.</p>
 
         <p>The substitute is statistical. Measure the distribution of outcomes instead of the events. Watch for drift in the prompt-and-model pair instead of waiting for crashes. Sample a small random subset every day and have a human read what the model decided.</p>
 
-        <hr>
-
-        <p class="closer">The next five slides are how that machinery looks at enterprise scale.</p>
-
         <aside class="notes">
-          The three shifts: distributions instead of events, drift instead of crashes, blind sampling instead of comprehensive audit.
+          The three shifts: distributions instead of events, drift instead of crashes, blind sampling instead of comprehensive audit. The next five slides are how the toolkit changes.
         </aside>
       </section>
 
@@ -774,9 +931,7 @@
           <span class="val">74.7%</span><span class="lbl">agreement on the latest 186-sample subset.</span>
         </div>
 
-        <hr>
-
-        <p class="closer">The lab has three tabs: authoring, versioning, head-to-head model comparison. Domain experts ship prompt patches without opening a pull request.</p>
+        <p>The lab has three tabs: authoring, versioning, and head-to-head model comparison. Domain experts ship prompt patches without opening a pull request.</p>
 
         <aside class="notes">
           Engineers stop being the bottleneck for prompt iteration. SMEs ship the patches.
@@ -788,26 +943,27 @@
         <span class="eyebrow">Enterprise &middot; Drift</span>
         <h2>Drift detection is <em>replaying</em> the golden set.</h2>
 
-        <p>Same golden set, same prompt, run on a schedule. Compare to the last run.</p>
+        <p>Same golden set, same prompt, run on a schedule. Two snapshots, two weeks apart, same prompt-and-model pair:</p>
 
-        <p>On 2026-04-15 the v4 prompt against sonnet-4-6 hit 76.2% agreement. On 2026-04-29 the same pair hit 71.4%. Down 4.8 points in two weeks. The vendor never told us. The replay did.</p>
+        <div class="drift-data">
+          <div class="stat">
+            <div class="date">2026-04-15</div>
+            <span class="pct">76.2%</span>
+          </div>
+          <div class="arrow">&rarr;</div>
+          <div class="stat">
+            <div class="date">2026-04-29</div>
+            <span class="pct">71.4%</span>
+          </div>
+          <div class="delta"><strong>&minus;4.8</strong><br>points<br>in two weeks</div>
+        </div>
 
-        <hr>
-
-        <p>Why replays beat vendor status pages:</p>
-
-        <p>Vendors don't announce small regressions or A/B holdouts.</p>
-
-        <p>Your prompt-model pair is what regressed, not the model alone.</p>
-
-        <p>Per-sample deltas tell you which decisions flipped, not just that the aggregate moved.</p>
+        <p>The vendor never told us. Cloudflare-style status pages don't announce small regressions or A/B holdouts. Your prompt-model pair is what regressed, not the model alone. Per-sample deltas tell you which decisions flipped, not just that the aggregate moved.</p>
 
         <p>The replay infrastructure doubles as your vendor-swap toolkit.</p>
 
-        <p class="closer">This is the difference between knowing your AI works today and knowing it still works next month.</p>
-
         <aside class="notes">
-          The replay infrastructure also pays its keep as a vendor swap toolkit. The day you want to move from one provider to another you run candidates against the golden set and the decision is data-driven.
+          The replay infrastructure pays its keep as a vendor-swap toolkit. The day you want to move providers you run candidates against the golden set and the decision is data-driven.
         </aside>
       </section>
 
@@ -850,19 +1006,15 @@
           <li class="row"><span class="num">05</span><span class="body"><span class="name">Gate blocking the gate</span><span class="desc">The criteria list that unlocks the next autonomy tier has been pending for weeks. The approval process itself became the blocker.</span></span></li>
         </ul>
 
-        <p class="closer">The system always tells you it's working. Only the reads tell you whether it is.</p>
-
         <aside class="notes">
-          Failure 5 is the meta one: even the approval pipeline can become its own bottleneck. Humans have to move too.
+          The system always tells you it's working. Only the reads tell you whether it is. Failure 5 is the meta one: even the approval pipeline can become its own bottleneck.
         </aside>
       </section>
 
       <!-- Slide 17: Risk × Autonomy (hero) -->
-      <section class="hero">
+      <section class="hero hero-scale">
         <span class="eyebrow">Enterprise &middot; Hero</span>
         <h2>Risk &times; <em>Autonomy</em>.</h2>
-
-        <p>The cell determines what you have to document, how often you sample, and the cadence of governance required to ship a feature.</p>
 
         <div class="matrix">
           <div class="corner"></div>
@@ -883,13 +1035,13 @@
           <div class="axis-label">High risk</div>
           <div class="cell diagonal">Formal approval flow. Per-decision audit. Independent review required.</div>
           <div class="cell">Per-decision audit. Continuous review queue. Two-person rule on overrides.</div>
-          <div class="cell diagonal"><strong>STOP.</strong>Move down a row or a column before turning this on.</div>
+          <div class="cell diagonal stop"><strong>STOP.</strong>Move down a row or a column before turning this on.</div>
         </div>
 
         <p class="closer">Place every feature on the grid before you ship it. Move down or left, never up or right, without re-earning trust.</p>
 
         <aside class="notes">
-          The Risk x Autonomy grid does at the feature level what Mode Progression does at the bot level.
+          The Risk x Autonomy grid does at the feature level what Mode Progression does at the bot level. Place every feature on the grid before you ship it.
         </aside>
       </section>
 
@@ -905,10 +1057,8 @@
           <li class="row"><span class="num">04</span><span class="body"><span class="name">Autonomous</span><span class="desc">AI decides. Sampled blind review continues.</span></span></li>
         </ul>
 
-        <p class="closer">Every step has to earn the next.</p>
-
         <aside class="notes">
-          Replicate the human workflow first. Then walk one column at a time, earning each tier with the calibration data you collected at the last one.
+          Replicate the human workflow first. Then walk one column at a time, earning each tier with calibration data from the last one. Every step has to earn the next.
         </aside>
       </section>
 
@@ -931,10 +1081,6 @@
           <h3>From the bridge</h3>
           <p>Deterministic code is the default. The LLM is for the ambiguity.</p>
         </div>
-
-        <hr>
-
-        <p class="closer">Two physics, one discipline.</p>
 
         <p class="slide-contact">Chase Aldridge &middot; chasealdridge.com &middot; linkedin.com/in/chase-aldridge</p>
 
